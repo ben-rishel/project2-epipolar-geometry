@@ -6,7 +6,7 @@ given Kmat and Pmat. Lastly, the locations of the cameras are printed.
 %}
 
 %% Testing construction of Kmat of camera 1
-ParametersV1 = load("Project2DataFiles\Parameters_V1_1.mat");
+ParametersV1 = load(fullfile("Project2DataFiles","Parameters_V1_1.mat"));
 
 cam1 = ParametersV1.Parameters;
 
@@ -18,10 +18,10 @@ kmat_test1 = [cam1.foclen, cam1.skew, cam1.prinpoint(1);
 % testing the difference between the test construction and given Kmat
 differenceK1 = max(abs(kmat_test1(:) - cam1.Kmat(:)));
 
-fprintf('Max absolute difference between test Kmat and provided Kmat (camera 1): %g\n', difference);
+fprintf('Max absolute difference between test Kmat and provided Kmat (camera 1): %g\n', differenceK1);
 
 %% Testing construction of Kmat of camera 2
-ParametersV2 = load("Project2DataFiles\Parameters_V2_1.mat");
+ParametersV2 = load(fullfile("Project2DataFiles", "Parameters_V2_1.mat"));
 
 cam2 = ParametersV2.Parameters;
 
@@ -33,7 +33,7 @@ kmat_test2 = [cam2.foclen, cam2.skew, cam2.prinpoint(1);
 % testing the difference between the test construction and given Kmat
 differenceK2 = max(abs(kmat_test2(:) - cam2.Kmat(:)));
 
-fprintf('Max absolute difference between test Kmat and provided Kmat (camera 2): %g\n', difference);
+fprintf('Max absolute difference between test Kmat and provided Kmat (camera 2): %g\n', differenceK2);
 
 %% Testing construction of Pmat of camera 1
 
@@ -47,7 +47,7 @@ Pmat_test1 = [R1, t1];
 
 differenceP1 = max(abs(Pmat_test1(:) - cam1.Pmat(:)));
 
-fprintf('Max absolute difference between test Pmat and provided Pmat (camera 1): %g\n', difference);
+fprintf('Max absolute difference between test Pmat and provided Pmat (camera 1): %g\n', differenceP1);
 
 %% Testing construction of Pmat of camera 2
 
@@ -60,7 +60,7 @@ Pmat_test2 = [R2, t2];
 
 differenceP2 = max(abs(Pmat_test2(:) - cam2.Pmat(:)));
 
-fprintf('Max absolute difference between test Pmat and provided Pmat (camera 2): %g\n', difference);
+fprintf('Max absolute difference between test Pmat and provided Pmat (camera 2): %g\n', differenceP2);
 
 %% Printing the locations of both cameras
 

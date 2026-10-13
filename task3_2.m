@@ -8,21 +8,21 @@ Script that applies the projectPoints3Dto2D function.
 %}
 
 % 1. Load camera parameters
-ParametersV1 = load("Project2DataFiles\Parameters_V1_1.mat");
-ParametersV2 = load("Project2DataFiles\Parameters_V2_1.mat");
+ParametersV1 = load(fullfile("Project2DataFiles", "Parameters_V1_1.mat"));
+ParametersV2 = load(fullfile("Project2DataFiles", "Parameters_V2_1.mat"));
 
 cam1 = ParametersV1.Parameters;
 cam2 = ParametersV2.Parameters;
 
 % 2. Load 3D points
 
-points3DData = load("Project2DataFiles\mocapPoints3D.mat");
+points3DData = load(fullfile("Project2DataFiles", "mocapPoints3D.mat"));
 points3D = points3DData.pts3D;
 
 % 3. Read the two corrected images
 
-imageV1 = imread("Project2DataFiles\im1corrected.jpg");
-imageV2 = imread("Project2DataFiles\im2corrected.jpg");
+imageV1 = imread(fullfile("Project2DataFiles", "im1corrected.jpg"));
+imageV2 = imread(fullfile("Project2DataFiles", "im2corrected.jpg"));
 
 % 4. Call the projectPoints3Dto2D function for each camera
 
