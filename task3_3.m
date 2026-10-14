@@ -1,5 +1,5 @@
 %{
-Script that applies the projectPoints3Dto2D function.
+Script that applies the triangulatePoints function and measures error.
 Steps 1-3: Taken from task3_2.m
 Step 5: Get viewing rays
 Step 6: Triangulate to recover 3D points
