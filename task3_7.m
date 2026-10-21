@@ -1,10 +1,12 @@
 %{
-Script that computes the fundamental matrix from the known camera
-calibration parameters and checks it by drawing epipolar lines.
+Script that computes the symmetric epipolar distance (SED) for the
+fundamental matrices obtained from both camera calibration and the
+eight-point algorithm
 Steps 1-3: Taken from task3_2.m
 Step 4: Compute F from the calibration parameters
-Step 5: Map image 1 points to epipolar lines in image 2 and vice versa
-Step 6: Show the epipolar lines on both images
+Step 5: Convert projected 2D points to homogeneous coordinates
+Step 6: Compute SED for both fundamental matrices
+Step 7: Display and compare SED values
 %}
 
 % 1. Load camera parameters
@@ -28,50 +30,47 @@ points2DV2 = projectPoints3Dto2D(points3D, cam2);
 % 4. Compute F from the calibration parameters
 [F, E, R, T] = computeFundamental(cam1, cam2);
 
-% 5. Map a subset of the points to epipolar lines in the other image
-idx = 1:5:size(points3D, 2); % every 5th point to keep the plots readable
-% Add 1s at bottom to make points homogeneous since not homogeneous when
-% returned from projectPoints3Dto2D
+% 5. Convert the projected 2D points to homogeneous coordinates
 p1 = [points2DV1; ones(1, size(points2DV1, 2))];
 p2 = [points2DV2; ones(1, size(points2DV2, 2))];
 
+% 6. Compute SED for both fundamental matrices 
 SEDcalibrated = 0;
+SEDeightpoint = 0;
 
-for i=1:size(p1, 2)
+% Iterate through all points
+for i=1:size(p1, 2) 
     x1 = p1(:,i);
     x2 = p2(:,i);
 
+    % Compute epipolar lines from the calibrated fundamental matrix
     l1 = F' * x2;
     l2 = F * x1;
 
+    % Compute normalized geometric distances
+    d1 = abs(x1' * l1) / sqrt(l1(1)^2 + l1(2)^2);
+    d2 = abs(x2' * l2) / sqrt(l2(1)^2 + l2(2)^2);
+
+    % Accumulate squared distances for calibrated SED
+    SEDcalibrated = SEDcalibrated + d1^2 + d2^2;
+
+    % Compute epipolar lines using the eight-point matrix
+    l1 = Feightpoint' * x2;
+    l2 = Feightpoint * x1;
+
+    % Compute normalized geometric distances
     d1 = abs(x1' * l1) / sqrt(l1(1)^2 + l1(2)^2);
     d2 = abs(x2' * l2) / sqrt(l2(1)^2 + l2(2)^2);
     
-    % Accumulate squared distances for SED
-    SEDcalibrated = SEDcalibrated + d1^2 + d2^2;
+    % Accumulate squared distances for eight-point SED
+    SEDeightpoint = SEDeightpoint + d1^2 + d2^2;
 
 end
 
-SEDcalibrated = SEDcalibrated / (2*size(p1, 2));
-
-SEDeightpoint = 0;
-
-for i=1:size(p1, 2)
-    x1 = p1(:,i);
-    x2 = p2(:,i);
-
-    l1 = Fmat' * x2;
-    l2 = Fmat * x1;
-
-    d1 = abs(x1' * l1) / sqrt(l1(1)^2 + l1(2)^2);
-    d2 = abs(x2' * l2) / sqrt(l2(1)^2 + l2(2)^2);
-    
-    % Accumulate squared distances for SED
-    SEDcalibrated = SEDcalibrated + d1^2 + d2^2;
-    
-end
-
+% Average squared distances across both images
+SEDcalibrated = SEDcalibrated / (2 * size(p1, 2));
 SEDeightpoint = SEDeightpoint / (2 * size(p1, 2));
 
+% 7. Display and compare the SED values
 fprintf('Calibrated F SED:   %.6f pixels^2\n', SEDcalibrated);
 fprintf('Eight-Point F SED:  %.6f pixels^2\n', SEDeightpoint);
