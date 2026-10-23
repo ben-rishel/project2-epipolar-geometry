@@ -7,6 +7,8 @@ Step 2: Call the 'eightpoint' function with images as arguments (user selects
 the points)
 Step 3: Display selected points
 Step 4: Display the estimated fundamental matrix
+Step 5: Save the estimated fundamental matrix and selected points using the 
+save() function
 %}
 
 % 1. Load the corrected stereo image pair
@@ -25,3 +27,6 @@ fprintf('  %14.8f  %14.8f\n', pts2');
 % 4. Display the estimated fundamental matrix
 fprintf('\nFundamental Matrix (F):\n');
 fprintf('  %14.8f  %14.8f  %14.8f\n', Feightpoint.');
+
+% 5. Save the estimated fundamental matrix and points for Task 3.7
+save('eightpointResults.mat', 'pts1', 'pts2', 'Feightpoint');

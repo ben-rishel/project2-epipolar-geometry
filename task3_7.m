@@ -4,7 +4,8 @@ fundamental matrices obtained from both camera calibration and the
 eight-point algorithm
 Steps 1-3: Taken from task3_2.m
 Step 4: Compute F from the calibration parameters
-Step 5: Convert projected 2D points to homogeneous coordinates
+Step 5: Convert projected 2D points to homogeneous coordinates and load 3.6
+matrix and point values
 Step 6: Compute SED for both fundamental matrices
 Step 7: Display and compare SED values
 %}
@@ -33,6 +34,11 @@ points2DV2 = projectPoints3Dto2D(points3D, cam2);
 % 5. Convert the projected 2D points to homogeneous coordinates
 p1 = [points2DV1; ones(1, size(points2DV1, 2))];
 p2 = [points2DV2; ones(1, size(points2DV2, 2))];
+
+% Load the eight-point results from Task 3.6
+eightpointData = load('eightpointResults.mat');
+Feightpoint = eightpointData.Feightpoint;
+
 
 % 6. Compute SED for both fundamental matrices 
 SEDcalibrated = 0;
