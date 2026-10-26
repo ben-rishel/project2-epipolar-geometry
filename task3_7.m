@@ -39,7 +39,6 @@ p2 = [points2DV2; ones(1, size(points2DV2, 2))];
 eightpointData = load('eightpointResults.mat');
 Feightpoint = eightpointData.Feightpoint;
 
-
 % 6. Compute SED for both fundamental matrices 
 SEDcalibrated = 0;
 SEDeightpoint = 0;
