@@ -77,5 +77,5 @@ SEDcalibrated = SEDcalibrated / (2 * size(p1, 2));
 SEDeightpoint = SEDeightpoint / (2 * size(p1, 2));
 
 % 7. Display and compare the SED values
-fprintf('Calibrated F SED:   %.6f pixels^2\n', SEDcalibrated);
+fprintf('Calibrated F SED:   %e pixels^2\n', SEDcalibrated);
 fprintf('Eight-Point F SED:  %.6f pixels^2\n', SEDeightpoint);
